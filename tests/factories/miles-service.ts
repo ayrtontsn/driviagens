@@ -19,6 +19,6 @@ export const trip = {
     miles: false,
     plane: "Boeing 747",
     service: ServiceClass.ECONOMIC,
-    affiliate: AffiliateStatus.GOLD,
+    affiliate: AffiliateStatus.BRONZE,
     date: "2024-07-17"
   }
