@@ -26,9 +26,6 @@ describe("calculateMiles", () => {
     })
 
     it("should return calculated miles equal 0 - usingMiles === true ", async () => {
-        jest.spyOn(calculate_distance, "calculateDistance").mockImplementationOnce((): any => {
-            return (100)
-        })
         trip.miles=true
 
         const miles = calculateMiles(trip)
