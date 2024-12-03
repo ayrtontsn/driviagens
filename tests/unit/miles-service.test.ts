@@ -14,12 +14,22 @@ describe("get /miles", () => {
             return (miles)
         })
 
-        const get_miles = await getMilesFromCode("12345")
+        const get_miles = await getMilesFromCode("ABC124")
         expect(get_miles).toEqual({
             id: 1,
             code: "ABC124",
             miles: 100
         });
+    });
+
+    it("should throw an error when miles is not found - not_found", () => {
+        jest.spyOn(milesRepository, "findMiles").mockResolvedValueOnce(null)
+
+        const promise = getMilesFromCode("ABC124")
+        expect(promise).rejects.toEqual({
+            type: "not_found",
+            message: `Miles not found for code ${"ABC124"}`
+          });
     });
 
 })
@@ -40,4 +50,15 @@ describe("post /miles", () => {
         expect(post_trip).toEqual(100);
     });
 
+    it("should throw an error when miles is found - conflict", () => {
+        jest.spyOn(milesRepository, "findMiles").mockResolvedValueOnce(
+            miles
+        )
+
+        const promise = generateMilesForTrip(trip)
+        expect(promise).rejects.toEqual({
+            type: "conflict",
+            message: `Miles already registered for code ${trip.code}`
+        });
+    });
 })
